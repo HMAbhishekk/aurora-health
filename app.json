@@ -1,0 +1,71 @@
+{
+  "expo": {
+    "name": "Aurora",
+    "slug": "aurora-health",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A0A1A"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.aurora.health",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Aurora needs microphone access to hear your voice commands.",
+        "NSSpeechRecognitionUsageDescription": "Aurora uses speech recognition to understand your health updates.",
+        "NSHealthShareUsageDescription": "Aurora reads health data to provide personalized insights.",
+        "NSHealthUpdateUsageDescription": "Aurora updates your health data based on your inputs."
+      }
+    },
+    "android": {
+      "package": "com.aurora.health",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundColor": "#0A0A1A"
+      },
+      "permissions": [
+        "RECORD_AUDIO",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "VIBRATE",
+        "RECEIVE_BOOT_COMPLETED",
+        "SCHEDULE_EXACT_ALARM",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Aurora needs microphone access to hear your voice commands."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#7C3AED",
+          "sounds": []
+        }
+      ]
+    ],
+    "notification": {
+      "icon": "./assets/icon.png",
+      "color": "#7C3AED"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9d27125d-dd8e-4ed2-93cd-0f827c5a1184"
+      }
+    }
+  }
+}
