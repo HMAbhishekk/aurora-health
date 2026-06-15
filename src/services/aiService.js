@@ -1,7 +1,7 @@
 import { storage } from './storageService';
 
 const GROQ_API = 'https://api.groq.com/openai/v1/chat/completions';
-const API_KEY = process.env.EXPO_PUBLIC_GROQ_API_KEY;
+const API_KEY = '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';
 
 const buildSystemPrompt = (user, todayData, habits, streaks) => {
   const todayStr = new Date().toISOString().split('T')[0];

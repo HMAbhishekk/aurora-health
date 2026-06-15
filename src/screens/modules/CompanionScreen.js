@@ -24,7 +24,6 @@ function BreathingOrb({ isRecording, isTranscribing, loading, isSpeaking }) {
   const ring2Scale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    // Breathing
     const speed = isRecording ? 300 : loading ? 500 : isSpeaking ? 400 : 2000;
     Animated.loop(
       Animated.sequence([
@@ -33,17 +32,14 @@ function BreathingOrb({ isRecording, isTranscribing, loading, isSpeaking }) {
       ])
     ).start();
 
-    // Outer ring rotate
     Animated.loop(
       Animated.timing(rotate, { toValue: 1, duration: 6000, useNativeDriver: true })
     ).start();
 
-    // Inner ring counter-rotate
     Animated.loop(
       Animated.timing(innerRotate, { toValue: -1, duration: 4000, useNativeDriver: true })
     ).start();
 
-    // Glow pulse
     Animated.loop(
       Animated.sequence([
         Animated.timing(glow, { toValue: 0.8, duration: speed * 1.2, useNativeDriver: true }),
@@ -51,7 +47,6 @@ function BreathingOrb({ isRecording, isTranscribing, loading, isSpeaking }) {
       ])
     ).start();
 
-    // Ripple rings when active
     if (isRecording || isSpeaking) {
       Animated.loop(
         Animated.sequence([
@@ -82,10 +77,8 @@ function BreathingOrb({ isRecording, isTranscribing, loading, isSpeaking }) {
 
   return (
     <View style={orbStyles.container}>
-      {/* Glow */}
       <Animated.View style={[orbStyles.glow, { opacity: glow, backgroundColor: orbColors[0] }]} />
 
-      {/* Ripple rings */}
       {(isRecording || isSpeaking) && (
         <>
           <Animated.View style={[orbStyles.ripple, { transform: [{ scale: ring1Scale }], borderColor: orbColors[0] + '40' }]} />
@@ -93,13 +86,9 @@ function BreathingOrb({ isRecording, isTranscribing, loading, isSpeaking }) {
         </>
       )}
 
-      {/* Outer rotating ring */}
       <Animated.View style={[orbStyles.outerRing, { transform: [{ rotate: spin }], borderColor: orbColors[0] + '50' }]} />
-
-      {/* Inner counter-rotating ring */}
       <Animated.View style={[orbStyles.innerRing, { transform: [{ rotate: spinBack }], borderColor: orbColors[1] + '60' }]} />
 
-      {/* Core */}
       <Animated.View style={[orbStyles.core, { transform: [{ scale: breathe }] }]}>
         <LinearGradient colors={orbColors} style={orbStyles.coreGradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
           <View style={orbStyles.shine} />
@@ -226,7 +215,7 @@ export default function CompanionScreen() {
 
           const res = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
             method: 'POST',
-            headers: { 'Authorization': `Bearer ${process.env.EXPO_PUBLIC_GROQ_API_KEY}` },
+            headers: { 'Authorization': `Bearer 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` },
             body: formData,
           });
           const data = await res.json();
@@ -252,7 +241,7 @@ export default function CompanionScreen() {
         if (!permission.granted) {
           setMessages(prev => [...prev, {
             role: 'aurora',
-            text: "I need microphone permission! Please go to Settings → Apps → Expo Go → Permissions → Allow Microphone.",
+            text: "I need microphone permission! Please go to Settings → Apps → Aurora → Permissions → Allow Microphone.",
           }]);
           return;
         }
@@ -400,7 +389,7 @@ export default function CompanionScreen() {
         </ScrollView>
       )}
 
-      {/* Input row - FIXED above tab bar */}
+      {/* Input row */}
       <View style={styles.inputRow}>
         <TextInput
           style={styles.input}
@@ -461,13 +450,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.06)',
   },
   headerLeft: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  auroraOrb: {
-    width: 46, height: 46, borderRadius: 23,
-    alignItems: 'center', justifyContent: 'center',
-    shadowColor: colors.companion, shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.5, shadowRadius: 12, elevation: 8,
-  },
-  auroraOrbText: { color: colors.white, fontSize: 20, fontWeight: '800' },
   headerTitle: { fontSize: 18, color: colors.textPrimary, fontWeight: '700' },
   statusRow: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 2 },
   statusDot: { width: 6, height: 6, borderRadius: 3 },
@@ -522,10 +504,10 @@ const styles = StyleSheet.create({
   quickChipText: { color: colors.textSecondary, fontSize: 13 },
   inputRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     paddingHorizontal: 12,
     paddingVertical: 10,
-    paddingBottom: 80, // ← KEY FIX: pushes above tab bar
+    paddingBottom: 100,
     gap: 8,
     borderTopWidth: 1,
     borderTopColor: 'rgba(255,255,255,0.06)',
@@ -534,22 +516,29 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     backgroundColor: colors.surface,
-    color: colors.textPrimary,
-    borderRadius: 22,
+    borderRadius: 20,
     paddingHorizontal: 16,
-    paddingVertical: 11,
+    paddingVertical: 10,
+    color: colors.textPrimary,
     fontSize: 15,
+    maxHeight: 100,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.08)',
-    maxHeight: 100,
   },
   micBtn: {
-    width: 44, height: 44, borderRadius: 22,
-    alignItems: 'center', justifyContent: 'center',
-    borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
   },
   sendBtn: {
-    width: 44, height: 44, borderRadius: 22,
-    alignItems: 'center', justifyContent: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
