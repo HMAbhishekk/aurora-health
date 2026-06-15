@@ -6,9 +6,6 @@ Built for [Hackathon Name] — Full-time Founding Engineer prize track.
 
 ---
 
-## 🎥 Demo Video
-
-[Watch the demo](https://drive.google.com/file/d/1QW-V3fQcjT0ctazBd-Zvb7xxy9269L_A/view?usp=drivesdk)
 
 ## 📱 Download APK
 
